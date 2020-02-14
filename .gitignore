@@ -1,0 +1,8 @@
+/target
+**/*.rs.bk
+
+# Jet Brains
+.idea
+
+# VS Code
+.vscode
