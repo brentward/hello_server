@@ -1,10 +1,10 @@
-use std::io::prelude::*;
-use std::net::TcpStream;
-use std::net::TcpListener;
+use hello_server::ThreadPool;
 use std::fs;
+use std::io::prelude::*;
+use std::net::TcpListener;
+use std::net::TcpStream;
 use std::thread;
 use std::time::Duration;
-use hello_server::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -17,6 +17,8 @@ fn main() {
             handle_connection(stream);
         });
     }
+
+    println!("Shutting down.")
 }
 
 fn handle_connection(mut stream: TcpStream) {
