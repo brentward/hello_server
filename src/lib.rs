@@ -20,6 +20,8 @@ enum Message {
     Terminate,
 }
 
+/// A manager for running a job using multiple threads while limiting the number of total threads
+/// and providing for graceful shutdown
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Message>,
@@ -47,6 +49,13 @@ impl ThreadPool {
         ThreadPool { workers, sender }
     }
 
+    /// Executes the a job in the next available thread in the ThreadPool.
+    ///
+    /// The f is the function or closure to execute in the thread.
+    ///
+    /// # Panics
+    ///
+    /// The `execute` function will panic when the receiving thread cannot accept the job.
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,
